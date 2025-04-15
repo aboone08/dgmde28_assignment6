@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.game-container {
+    background: #121213;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: auto;
+}
+
+#guess-input {
+    padding: 10px;
+    width: 80%;
+    margin-top: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#word-container {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.guess-result {
+    background-color: black;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.correct {
+    color: #538D4E; /* color taken from https://www.nytimes.com/games/wordle/index.html for letters that ARE IN the generated word and in the right spot */
+    font-weight: bold;
+}
+
+.misplaced {
+    color: #B49F3A; /* color taken from https://www.nytimes.com/games/wordle/index.html for letters that are in the generated word but NOT in the right spot */
+    font-weight: bold;
+}
+
+.wrong {
+    color: #3A3A3C; /* color taken from https://www.nytimes.com/games/wordle/index.html for letters that are NOT in the generated word */
+    text-decoration: line-through;
+}
+
+#used-letters {
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+/* for onscreen keyboard */
+#keyboard {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    justify-items: center;
+}
+
+.key {
+    background-color: #3A3A3C;
+    color: white;
+    border: none;
+    border: 4px;
+    padding: 10px;
+    text-transform: uppercase;
+    width: 100%;
+    cursor: pointer;
+}
+
+.key.correct {
+    background-color: #538D4E;
+}
+
+.key.misplaced {
+    background-color: #B49F3A;
+}
+
+.key.wrong {
+    background-color: #3A3A3C;
+    opacity: 0.4;
+}
+
+
+/* Responsive Design for Screens Down to 700px */
+@media (max-width: 700px) {
+    .game-container {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+/* Responsive Design for Screens Down to 600px */
+@media (max-width: 600px) {
+    .game-container {
+        padding: 15px;
+    }
+
+    #guess-input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #keyboard {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
