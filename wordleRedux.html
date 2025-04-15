@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 6: Wordle Redux</title>
+    <link rel="stylesheet" href="wordleRedux.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="myapp"></div>
+    <script src="wordleRedux.js"></script>
+
+    <script>
+        // Helper: compare guess with answer
+        function getResultRow(guess, answer) {
+          const result = [];
+          const answerArr = answer.split('');
+          const guessArr = guess.split('');
+          const letterCount = {};
+    
+          answerArr.forEach(letter => {
+            letterCount[letter] = (letterCount[letter] || 0) + 1;
+          });
+    
+          const flags = guessArr.map((letter, i) => {
+            if (letter === answerArr[i]) {
+              letterCount[letter]--;
+              return "correct";
+            }
+            return null;
+          });
+    
+          guessArr.forEach((letter, i) => {
+            let className = "wrong";
+            if (flags[i] === "correct") {
+              className = "correct";
+            } else if (answerArr.includes(letter) && letterCount[letter] > 0) {
+              className = "misplaced";
+              letterCount[letter]--;
+            }
+            result.push(React.createElement("span", { className: className, key: i }, letter.toUpperCase()));
+          });
+    
+          return React.createElement("div", { className: "guess-row" }, result);
+        }
+    
+        // Board component
+        function WordleBoard() {
+          const answer = "moody";
+          const guesses = ["might", "flood", "stray"];
+          const board = guesses.map((guess, idx) =>
+            getResultRow(guess, answer)
+          );
+    
+          // Fill in empty rows up to 6
+          while (board.length < 6) {
+            const empty = React.createElement(
+              "div",
+              { className: "guess-row", key: board.length },
+              Array(5).fill("").map((_, i) => React.createElement("span", { key: i }, " "))
+            );
+            board.push(empty);
+          }
+    
+          return React.createElement("div", { className: "wordle-board" }, board);
+        }
+    
+        // Keyboard component (non-interactive)
+        function Keyboard() {
+          const keys = "QWERTYUIOPASDFGHJKLZXCVBNM".split("");
+          return React.createElement(
+            "div",
+            { className: "keyboard" },
+            keys.map((letter, i) =>
+              React.createElement("div", { className: "key", key: i }, letter)
+            )
+          );
+        }
+    
+        // Root App component
+        function App() {
+          return React.createElement("div", { className: "game-container" }, [
+            React.createElement("h1", { key: "title" }, "Wordle Game (React Static)"),
+            React.createElement(WordleBoard, { key: "board" }),
+            React.createElement("h2", { key: "keyboard-title" }, "Keyboard"),
+            React.createElement(Keyboard, { key: "keyboard" })
+          ]);
+        }
+    
+        ReactDOM.render(React.createElement(App), document.getElementById("root"));
+      </script>
+</body>
+</html>
